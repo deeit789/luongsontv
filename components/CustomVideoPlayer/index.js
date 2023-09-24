@@ -17,10 +17,14 @@ const CustomVideoPlayer = ({ videoSource }) => {
       await ScreenOrientation.lockAsync(
         ScreenOrientation.OrientationLock.PORTRAIT
       );
+      // Set preferred orientation for video player
+      await ScreenOrientation.unlockAsync();
     } else {
       await ScreenOrientation.lockAsync(
         ScreenOrientation.OrientationLock.LANDSCAPE
       );
+      // Set preferred orientation for video player
+      await ScreenOrientation.unlockAsync();
     }
 
     setIsFullScreen(!isFullScreen);
