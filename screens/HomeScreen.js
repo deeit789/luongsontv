@@ -1,15 +1,12 @@
 import React, { useLayoutEffect } from "react";
 import { ScrollView, Text, View } from "react-native";
-// import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomVideoPlayer from "../components/CustomVideoPlayer";
 
 const HomeScreen = ({ navigation }) => {
-  // const navigation = useNavigation();
-
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerShown: false, // Hide the header
+      headerShown: false,
     });
   }, []);
 

@@ -3,10 +3,14 @@ import { Video } from "expo-av";
 import { View, StyleSheet, TouchableOpacity, Text } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import * as ScreenOrientation from "expo-screen-orientation";
+import { useNavigation } from "@react-navigation/native";
+import { SCREEN_NAME } from "../../utils/common/const";
 
 const CustomVideoPlayer = ({ videoSource }) => {
+  const navigation = useNavigation();
   const [isPlaying, setIsPlaying] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(false);
+  const videoRef = useRef(null);
 
   const togglePlayPause = () => {
     setIsPlaying(!isPlaying);
@@ -17,14 +21,14 @@ const CustomVideoPlayer = ({ videoSource }) => {
       await ScreenOrientation.lockAsync(
         ScreenOrientation.OrientationLock.PORTRAIT
       );
-      // Set preferred orientation for video player
-      await ScreenOrientation.unlockAsync();
+      navigation.goBack();
     } else {
       await ScreenOrientation.lockAsync(
         ScreenOrientation.OrientationLock.LANDSCAPE
       );
-      // Set preferred orientation for video player
-      await ScreenOrientation.unlockAsync();
+      navigation.navigate(SCREEN_NAME.FULL_SCREEN_VIDEO, {
+        videoSource: videoSource,
+      });
     }
 
     setIsFullScreen(!isFullScreen);
@@ -33,6 +37,7 @@ const CustomVideoPlayer = ({ videoSource }) => {
   return (
     <View style={styles.container}>
       <Video
+        ref={videoRef}
         source={{ uri: videoSource }}
         style={isFullScreen ? styles.fullScreenVideo : styles.video}
         shouldPlay={isPlaying}
